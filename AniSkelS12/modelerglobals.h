@@ -10,12 +10,12 @@
 // of the controls from the user interface.
 enum SampleModelControls
 { 
-	LEVEL_OF_DETAIL, 
-	MOOD,
-	ANIMATE,
-	XPOS, 
-	YPOS, 
-	ZPOS, 
+	BOTTLE_XPOS,
+	BOTTLE_YPOS,
+	BOTTLE_ZPOS,
+	SPIDER_XPOS, 
+	SPIDER_YPOS, 
+	SPIDER_ZPOS, 
 	SPIDER_ROTATE_Z,
 	BODY_ROTATE_Z,
 	LEFT_TOOTH_ROTATE_Y,

@@ -10,6 +10,8 @@
 #define MODELERVIEW_H
 
 #include <FL/Fl_Gl_Window.H>
+#include <FL/gl.h>
+#include "mat.h"
 
 class Camera;
 class ModelerView;
@@ -40,5 +42,6 @@ public:
 	bool save_bmp;
 };
 
+Mat4f getModelViewMatrix();
 
 #endif

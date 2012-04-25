@@ -4,11 +4,17 @@
 #include "modelerapp.h"
 #include "modelerdraw.h"
 #include "meta_drawing.h"
+#include "particleSystem.h"
 #include <FL/gl.h>
  
 #include "modelerglobals.h"
+#include "modelerview.h"
+
+#include <iostream>
  
 int currMood = 0;
+
+// ParticleSystem* ps;
  
 // To make a SampleModel, we inherit off of ModelerView
 class SampleModel : public ModelerView 
@@ -27,6 +33,7 @@ ModelerView* createSampleModel(int x, int y, int w, int h, char *label)
     return new SampleModel(x,y,w,h,label); 
 }
  
+/*
 void animate() {
     SETVAL(XPOS, VAL(XPOS) + 1);
 }
@@ -232,6 +239,7 @@ void setMood() {
         }
     }
 }
+*/
  
 // We are going to override (is that the right word?) the draw()
 // method of ModelerView to draw out SampleModel
@@ -242,41 +250,80 @@ void SampleModel::draw()
     // projection matrix, don't bother with this ...
     ModelerView::draw();
  
+	Mat4f cameraTrans = getModelViewMatrix();
+
     // draw the floor
     setAmbientColor(.1f,.1f,.1f);
     setDiffuseColor(1, 1, 1);
-    //drawSphere(6.0);
     // drawTwoBalls();
  
-    //drawWeb(9, 15);
+    // drawWeb(9, 15);
  
+    #define DETAIL 999
+
+    setDiffuseColor(0.0f, 1.0f, 0.0f);
+
+	// pesticide bottow:
+	glPushMatrix();
+		glTranslated(VAL(BOTTLE_XPOS), VAL(BOTTLE_YPOS), VAL(BOTTLE_ZPOS));
+		glRotated(90, 1 ,0, 0);
+		drawCylinder(4, 1, 1);
+
+		// upper parts
+		glPushMatrix();
+			glTranslated(0, 0, -1);
+			drawCylinder(1, 0.7, 1);
+
+			// button
+			setDiffuseColor(1.0f, 1.0f, 0.0f);
+			glPushMatrix();
+				glTranslated(0, 0, -0.2);
+				drawCylinder(0.2, 0.3, 0.3);
+			glPopMatrix();
+
+		glPopMatrix();
+
+		// mouth
+		glPushMatrix();
+			setDiffuseColor(0.0f, 1.0f, 0.0f);
+			glTranslated(0, 0, -0.5);
+			glRotated(90, 0, 1, 0);
+			drawCylinder(1.0, 0.3, 0.3);
+
+			// top of mouth
+			setDiffuseColor(1.0f, 0.0f, 0.0f);
+			glPushMatrix();
+				glTranslated(0, 0, 1.0);
+				drawCylinder(0.1, 0.1, 0.1);
+				
+				Mat4f transMat = getModelViewMatrix();
+				Mat4f worldTrans = cameraTrans.inverse() * transMat;
+				Vec4<float> worldPoint = worldTrans * Vec4<float>(0, 0, 0, 1);
+
+				ParticleSystem *ps = ModelerApplication::Instance()->GetParticleSystem();
+				ps->addParticlesAt(Vec3<float>(worldPoint[0], worldPoint[1], worldPoint[2]), 10);
+
+			glPopMatrix();
+
+		glPopMatrix();
+
+	glPopMatrix();
+
     setDiffuseColor(0.5f, 0.4f, 0.4f);
- 
-    #define DETAIL (VAL(LEVEL_OF_DETAIL))
- 
-    if (currMood != VAL(MOOD)) {
-        setMood();
-        currMood = VAL(MOOD);
-    }
- 
-    if (VAL(ANIMATE)) {
-        animate();
-    }
- 
-    // whole
+  
+    // spider
     glPushMatrix();
-    glTranslated(VAL(XPOS), VAL(YPOS), VAL(ZPOS));
+    glTranslated(VAL(SPIDER_XPOS), VAL(SPIDER_YPOS), VAL(SPIDER_ZPOS));
     glTranslated(0, 1.5, 0);
     glRotated(VAL(SPIDER_ROTATE_Z), 0, 0, 1);
- 
- 
+
     if (DETAIL >= 1) {
         // belly
         glPushMatrix();
         glTranslated(1.5, 0, 0);
-        glScaled(1.1, 0.7, 0.8);
-		drawTwoBalls();
-        //drawSphere(1.2);
+        glScaled(1.1, 0.6, 0.6);
+		// drawTwoBalls();
+        drawSphere(1.2);
  
         // spinneret
         if (DETAIL >= 2) {
@@ -582,6 +629,8 @@ void SampleModel::draw()
     }
  
     glPopMatrix();
+
+	endDraw();
 }
  
 int main()
@@ -590,12 +639,13 @@ int main()
     // Constructor is ModelerControl(name, minimumvalue, maximumvalue, 
     // stepsize, defaultvalue)
     ModelerControl controls[NUMCONTROLS];
-    controls[LEVEL_OF_DETAIL] = ModelerControl("Level of Detail", 1, 6, 1, 6);
-    controls[MOOD] = ModelerControl("Mood", 0, 3, 1, 0);
-    controls[ANIMATE] = ModelerControl("Animate", 0, 1, 1, 0);
-    controls[XPOS] = ModelerControl("X Position", -5, 5, 0.1f, 0);
-    controls[YPOS] = ModelerControl("Y Position", 0, 5, 0.1f, 0);
-    controls[ZPOS] = ModelerControl("Z Position", -5, 5, 0.1f, 0);
+    controls[BOTTLE_XPOS] = ModelerControl("Bottle X Position", -20, 10, 0.1f, -10);
+    controls[BOTTLE_YPOS] = ModelerControl("Bottle Y Position", -10, 20, 0.1f, 5);
+    controls[BOTTLE_ZPOS] = ModelerControl("Bottle Z Position", -20, 10, 0.1f, 0);
+ 
+    controls[SPIDER_XPOS] = ModelerControl("Spider X Position", -5, 5, 0.1f, 0);
+    controls[SPIDER_YPOS] = ModelerControl("Spider Y Position", 0, 5, 0.1f, 0);
+    controls[SPIDER_ZPOS] = ModelerControl("Spider Z Position", -5, 5, 0.1f, 0);
  
     controls[SPIDER_ROTATE_Z] = ModelerControl("Spider Rotate Z", -180, 180, 1, 0);
     controls[BODY_ROTATE_Z] = ModelerControl("Body Rotate Z", 30, -60, 1, 0);
@@ -676,6 +726,9 @@ int main()
 	controls[META_BALL_1_Size] = ModelerControl("Metaball 1 Size",-0.3,0.3,0.05,0);
 	controls[META_BALL_2_Pos] = ModelerControl("Metaball 2 Position",-0.5,0.5,0.05,0);
 	controls[META_BALL_2_Size] = ModelerControl("Metaball 2 Size", -0.5,0.5,0.05,0);
+
+	ParticleSystem* ps = new ParticleSystem;
+	ModelerApplication::Instance()->SetParticleSystem(ps);
  
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
     return ModelerApplication::Instance()->Run();

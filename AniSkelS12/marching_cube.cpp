@@ -122,7 +122,6 @@ void Cube_Grid::DrawSurface(float threshold) {
 		}
 	}
 	glEnd();
-	printf("Num faces drawn %d\n", numFacesDrawn);
 }
 
 void Cube_Grid::freeMem() {

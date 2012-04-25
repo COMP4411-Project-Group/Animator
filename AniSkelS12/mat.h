@@ -108,6 +108,7 @@ typedef Mat3<double> Mat3d;
 
 template <class T>
 class Mat4 {
+public:
 
 	//---[ Private Variable Declarations ]-----------------
 

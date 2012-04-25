@@ -17,6 +17,10 @@
 #define __PARTICLE_SYSTEM_H__
 
 #include "vec.h"
+#include "modelerdraw.h"
+#include "particle.h"
+#include <vector>
+#include <FL/gl.h>
 
 
 
@@ -62,6 +66,8 @@ public:
 	// of baked particles (without leaking memory).
 	virtual void clearBaked();	
 
+	virtual void addParticlesAt(Vec3<float> pos, int num);
+
 
 
 	// These accessor fxns are implemented for you
@@ -88,6 +94,9 @@ protected:
 	/** General state variables **/
 	bool simulate;						// flag for simulation mode
 	bool dirty;							// flag for updating ui (don't worry about this)
+
+	vector<Particle*> particles;
+	vector<Force*> forces;
 
 };
 
