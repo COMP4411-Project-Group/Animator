@@ -20,6 +20,7 @@
 #include "modelerdraw.h"
 #include "particle.h"
 #include <vector>
+#include <map>
 #include <FL/gl.h>
 
 
@@ -68,6 +69,8 @@ public:
 
 	virtual void addParticlesAt(Vec3<float> pos, int num);
 
+	virtual bool isBakedAt(float t);
+
 
 
 	// These accessor fxns are implemented for you
@@ -95,8 +98,12 @@ protected:
 	bool simulate;						// flag for simulation mode
 	bool dirty;							// flag for updating ui (don't worry about this)
 
-	vector<Particle*> particles;
+	float curr_time;
+
+	vector<Particle> particles;
 	vector<Force*> forces;
+
+	map<float, vector<Particle>> bakeData;
 
 };
 

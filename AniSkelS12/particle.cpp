@@ -4,12 +4,12 @@ void Particle::addForce(Force* f) {
 	forces.push_back(f);
 }
 
-void Particle::move() {
+void Particle::move(float deltaT) {
 	vector<Force*>::iterator iter;
 	for (iter = forces.begin(); iter != forces.end(); iter++) {
-		(*iter)->applyTo(speed);
+		(*iter)->applyTo(speed, deltaT);
 	}
-	pos += speed;
+	pos += speed * deltaT;
 }
 
 void Particle::draw() {

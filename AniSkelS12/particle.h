@@ -27,7 +27,7 @@ public:
 	}
 
 	void addForce(Force* f);
-	void move();
+	void move(float deltaT);
 	void draw();
 
 private:

@@ -224,7 +224,7 @@ void Camera::dragMouse( int x, int y )
 			if (getElevation() > M_PI) 
 				mElevation -= 2.0*M_PI;
 
-			fprintf(stderr, "az %f, elev %f\n", mAzimuth, mElevation);
+			// fprintf(stderr, "az %f, elev %f\n", mAzimuth, mElevation);
 
 			break;
 		}

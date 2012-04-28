@@ -14,8 +14,6 @@
  
 int currMood = 0;
 
-// ParticleSystem* ps;
- 
 // To make a SampleModel, we inherit off of ModelerView
 class SampleModel : public ModelerView 
 {
@@ -270,6 +268,7 @@ void SampleModel::draw()
 		drawCylinder(4, 1, 1);
 
 		// upper parts
+		setDiffuseColor(0.0f, 0.0f, 1.0f);
 		glPushMatrix();
 			glTranslated(0, 0, -1);
 			drawCylinder(1, 0.7, 1);
@@ -301,7 +300,7 @@ void SampleModel::draw()
 				Vec4<float> worldPoint = worldTrans * Vec4<float>(0, 0, 0, 1);
 
 				ParticleSystem *ps = ModelerApplication::Instance()->GetParticleSystem();
-				ps->addParticlesAt(Vec3<float>(worldPoint[0], worldPoint[1], worldPoint[2]), 10);
+				ps->addParticlesAt(Vec3<float>(worldPoint[0], worldPoint[1], worldPoint[2]), 5);
 
 			glPopMatrix();
 
