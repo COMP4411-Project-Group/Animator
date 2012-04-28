@@ -7,11 +7,10 @@ void BezierCurveEvaluator::evaluateCurve(
 	vector<Point>& ptvEvaluatedCurvePts,
 	const float& fAniLength,
     const bool& bWrap) const {
-//Initialization
-	//Not enough points
+
+	//Not enough points, use straight line
 	int numCtrPt = ptvCtrlPts.size();
 	if(numCtrPt<4) {
-		printf("Smaller than 4");
 		//If the number is less than 4, simply do linear, copy and paste from linear evaluator
 		int iCtrlPtCount = ptvCtrlPts.size();
 	
@@ -53,6 +52,7 @@ void BezierCurveEvaluator::evaluateCurve(
 		ptvEvaluatedCurvePts.push_back(Point(x, y2));
 		return;
 	}
+
 	ptvEvaluatedCurvePts.clear();
 
 	// Copy a local version of control points for 
@@ -76,7 +76,7 @@ void BezierCurveEvaluator::evaluateCurve(
 	int index = 0;
 	int step_length = 3;
 	int n_sample=100;
-	Mat4f basis_matrix(-1, 3, -3, 1,
+	Mat4f beizer_basis_matrix(-1, 3, -3, 1,
 					   3 ,-6,  3, 0,
 					   -3, 3,  0, 0,
 					    1, 0,  0, 0);
@@ -92,8 +92,8 @@ void BezierCurveEvaluator::evaluateCurve(
 		Vec4f x_val(p1.x,p2.x,p3.x, p4.x);
 		Vec4f y_val(p1.y, p2.y, p3.y, p4.y);
 
-		x_val = basis_matrix*x_val;
-		y_val = basis_matrix*y_val;
+		x_val = beizer_basis_matrix*x_val;
+		y_val = beizer_basis_matrix*y_val;
 
 		//pick samples
 		for(int i=0; i<n_sample; i++) {
