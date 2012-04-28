@@ -3,8 +3,6 @@
 #include "mat.h"
 
 
-void Bspline::interpolate_start(vector<Point>& de_boor_pts) {
-}
 void Bspline::evaluateCurve(
 		const vector<Point>& ptvCtrlPts,
 		vector<Point>& ptvEvaluatedCurvePts,
@@ -67,7 +65,7 @@ void Bspline::evaluateCurve(
 			de_boor_ctrl_pts.push_back(wrapped_pt); } Point wrapped_pt(ptvCtrlPts[numCtrPt-1].x-fAniLength, ptvCtrlPts[numCtrPt-1].y);
 		de_boor_ctrl_pts.insert(de_boor_ctrl_pts.begin(), wrapped_pt);
 	}
-	//Interpolate the start points
+	//Interpolate the start points, by duplicate the end points
 	de_boor_ctrl_pts.insert(de_boor_ctrl_pts.begin(),de_boor_ctrl_pts.front()); 
 	de_boor_ctrl_pts.insert(de_boor_ctrl_pts.begin(),de_boor_ctrl_pts.front()); 
 	de_boor_ctrl_pts.push_back(de_boor_ctrl_pts.back());
