@@ -276,7 +276,7 @@ void SampleModel::draw()
 			// button
 			setDiffuseColor(1.0f, 1.0f, 0.0f);
 			glPushMatrix();
-				glTranslated(0, 0, -0.2);
+				glTranslated(0, 0, VAL(BOTTLE_BUTTON_POS));
 				drawCylinder(0.2, 0.3, 0.3);
 			glPopMatrix();
 
@@ -641,6 +641,7 @@ int main()
     controls[BOTTLE_XPOS] = ModelerControl("Bottle X Position", -20, 10, 0.1f, -10);
     controls[BOTTLE_YPOS] = ModelerControl("Bottle Y Position", -10, 20, 0.1f, 5);
     controls[BOTTLE_ZPOS] = ModelerControl("Bottle Z Position", -20, 10, 0.1f, 0);
+    controls[BOTTLE_BUTTON_POS] = ModelerControl("Bottle Button Position", -0.2, -0.05, 0.01f, -0.2);
  
     controls[SPIDER_XPOS] = ModelerControl("Spider X Position", -5, 5, 0.1f, 0);
     controls[SPIDER_YPOS] = ModelerControl("Spider Y Position", 0, 5, 0.1f, 0);
