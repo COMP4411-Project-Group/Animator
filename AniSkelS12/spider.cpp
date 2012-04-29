@@ -9,10 +9,15 @@
  
 #include "modelerglobals.h"
 #include "modelerview.h"
+#include "heightmap.h"
 
 #include <iostream>
+#include <fstream>
+#include <ctime>
  
 int currMood = 0;
+
+HeightMap* heightMap;
 
 // To make a SampleModel, we inherit off of ModelerView
 class SampleModel : public ModelerView 
@@ -261,11 +266,16 @@ void SampleModel::draw()
 
     setDiffuseColor(0.0f, 1.0f, 0.0f);
 
+	glPushMatrix();
+		glTranslated(-5, -2, -5);
+		heightMap->draw();
+	glPopMatrix();
+
 	// pesticide bottow:
 	glPushMatrix();
 		glTranslated(VAL(BOTTLE_XPOS), VAL(BOTTLE_YPOS), VAL(BOTTLE_ZPOS));
 		glRotated(90, 1 ,0, 0);
-		drawCylinder(4, 1, 1);
+		drawCylinder(4, 1, 1, true);
 
 		// upper parts
 		setDiffuseColor(0.0f, 0.0f, 1.0f);
@@ -729,7 +739,19 @@ int main()
 
 	ParticleSystem* ps = new ParticleSystem;
 	ModelerApplication::Instance()->SetParticleSystem(ps);
- 
+
+	heightMap = new HeightMap(100, 100, 10);
+
+	srand(time(0));
+	float** vals = new float*[100];
+	for (int i = 0; i < 100; i++) {
+		vals[i] = new float[100];
+		for (int j = 0; j < 100; j++) {
+			vals[i][j] = (rand() % 2 - 1) / 50.0f + (i * i) / 4000.0f - (j * j) / 4000.0f;
+		}
+	}
+	heightMap->setVal(vals);
+
     ModelerApplication::Instance()->Init(&createSampleModel, controls, NUMCONTROLS);
     return ModelerApplication::Instance()->Run();
 }

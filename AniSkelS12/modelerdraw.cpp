@@ -193,7 +193,7 @@ void closeRayFile()
     mds->m_rayFile = NULL;
 }
 
-void drawSphere(double r)
+void drawSphere(double r, bool enableTexture)
 {
     ModelerDrawState *mds = ModelerDrawState::Instance();
 
@@ -225,7 +225,9 @@ void drawSphere(double r)
         
         gluq = gluNewQuadric();
         gluQuadricDrawStyle( gluq, GLU_FILL );
-        gluQuadricTexture( gluq, GL_TRUE );
+		if (enableTexture) {
+			gluQuadricTexture( gluq, GL_TRUE );
+		}
         gluSphere(gluq, r, divisions, divisions);
         gluDeleteQuadric( gluq );
     }
@@ -374,7 +376,7 @@ void drawTextureBox( double x, double y, double z )
 }
 
 
-void drawCylinder( double h, double r1, double r2 )
+void drawCylinder( double h, double r1, double r2, bool enableTexture)
 {
     ModelerDrawState *mds = ModelerDrawState::Instance();
     int divisions;
@@ -408,7 +410,10 @@ void drawCylinder( double h, double r1, double r2 )
         /* GLU will again do the work.  draw the sides of the cylinder. */
         gluq = gluNewQuadric();
         gluQuadricDrawStyle( gluq, GLU_FILL );
-        gluQuadricTexture( gluq, GL_TRUE );
+		if (enableTexture) {
+			glBindTexture(GL_TEXTURE_2D, 0);
+			gluQuadricTexture( gluq, GL_TRUE );
+		}
         gluCylinder( gluq, r1, r2, h, divisions, divisions);
         gluDeleteQuadric( gluq );
         
@@ -419,7 +424,10 @@ void drawCylinder( double h, double r1, double r2 )
             
             gluq = gluNewQuadric();
             gluQuadricDrawStyle( gluq, GLU_FILL );
-            gluQuadricTexture( gluq, GL_TRUE );
+			if (enableTexture) {
+				glBindTexture(GL_TEXTURE_2D, 0);
+				gluQuadricTexture( gluq, GL_TRUE );
+			}
             gluQuadricOrientation( gluq, GLU_INSIDE );
             gluDisk( gluq, 0.0, r1, divisions, divisions);
             gluDeleteQuadric( gluq );
@@ -442,7 +450,10 @@ void drawCylinder( double h, double r1, double r2 )
             /* draw a disk centered at the new origin. */
             gluq = gluNewQuadric();
             gluQuadricDrawStyle( gluq, GLU_FILL );
-            gluQuadricTexture( gluq, GL_TRUE );
+			if (enableTexture) {
+				glBindTexture(GL_TEXTURE_2D, 0);
+				gluQuadricTexture( gluq, GL_TRUE );
+			}
             gluQuadricOrientation( gluq, GLU_OUTSIDE );
             gluDisk( gluq, 0.0, r2, divisions, divisions);
             gluDeleteQuadric( gluq );
@@ -454,6 +465,7 @@ void drawCylinder( double h, double r1, double r2 )
     }
     
 }
+
 void drawTriangle( double x1, double y1, double z1,
                    double x2, double y2, double z2,
                    double x3, double y3, double z3 )

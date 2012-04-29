@@ -66,6 +66,9 @@
     <ClCompile Include="modeleruiwindows.cxx">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="modelerview.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
     <ClCompile Include="bitmap.cpp">
       <Filter>Source Files\Particles</Filter>
     </ClCompile>
@@ -108,8 +111,11 @@
     <ClCompile Include="force.cpp">
       <Filter>Source Files\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="modelerview.cpp">
-      <Filter>Source Files\Model</Filter>
+    <ClCompile Include="bsplinecurve.cpp">
+      <Filter>Source Files\Curves</Filter>
+    </ClCompile>
+    <ClCompile Include="catmullromcurve.cpp">
+      <Filter>Source Files\Curves</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +193,15 @@
     </ClInclude>
     <ClInclude Include="force.h">
       <Filter>Header Files\Particles.</Filter>
+    </ClInclude>
+    <ClInclude Include="bsplinecurve.h">
+      <Filter>Header Files\Curves.</Filter>
+    </ClInclude>
+    <ClInclude Include="catmullromcurve.h">
+      <Filter>Header Files\Curves.</Filter>
+    </ClInclude>
+    <ClInclude Include="heightmap.h">
+      <Filter>Header Files\Model.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

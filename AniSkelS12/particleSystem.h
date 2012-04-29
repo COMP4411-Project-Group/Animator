@@ -19,24 +19,21 @@
 #include "vec.h"
 #include "modelerdraw.h"
 #include "particle.h"
+#include "bitmap.h"
 #include <vector>
 #include <map>
 #include <FL/gl.h>
 
-
-
 class ParticleSystem {
 
 public:
-
-
-
 	/** Constructor **/
 	ParticleSystem();
 
-
 	/** Destructor **/
 	virtual ~ParticleSystem();
+
+	virtual void loadTexture();
 
 	/** Simulation fxns **/
 	// This fxn should render all particles in the system,
@@ -71,8 +68,6 @@ public:
 
 	virtual bool isBakedAt(float t);
 
-
-
 	// These accessor fxns are implemented for you
 	float getBakeStartTime() { return bake_start_time; }
 	float getBakeEndTime() { return bake_end_time; }
@@ -81,11 +76,7 @@ public:
 	bool isDirty() { return dirty; }
 	void setDirty(bool d) { dirty = d; }
 
-
-
 protected:
-	
-
 
 	/** Some baking-related state **/
 	float bake_fps;						// frame rate at which simulation was baked
@@ -104,7 +95,6 @@ protected:
 	vector<Force*> forces;
 
 	map<float, vector<Particle>> bakeData;
-
 };
 
 

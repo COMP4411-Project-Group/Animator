@@ -136,6 +136,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="beziercurve.cpp" />
+    <ClCompile Include="bsplinecurve.cpp" />
+    <ClCompile Include="catmullromcurve.cpp" />
     <ClCompile Include="curve.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -251,9 +253,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="beziercurve.h" />
+    <ClInclude Include="bsplinecurve.h" />
+    <ClInclude Include="catmullromcurve.h" />
     <ClInclude Include="curve.h" />
     <ClInclude Include="curveevaluator.h" />
     <ClInclude Include="force.h" />
+    <ClInclude Include="heightmap.h" />
     <ClInclude Include="linearcurveevaluator.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="marching_cube.h" />

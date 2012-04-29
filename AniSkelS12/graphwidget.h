@@ -61,7 +61,7 @@ public:
 		}
 		else {
 #ifdef _DEBUG
-			assert(0);
+			//assert(0);
 #endif // _DEBUG
 		}
 	}
