@@ -33,12 +33,10 @@ public:
 	/** Destructor **/
 	virtual ~ParticleSystem();
 
-	virtual void loadTexture();
-
 	/** Simulation fxns **/
 	// This fxn should render all particles in the system,
 	// at current time t.
-	virtual void drawParticles(float t);
+	virtual void drawParticles(float t, Vec3f viewDir);
 
 	// This fxn should save the configuration of all particles
 	// at current time t.

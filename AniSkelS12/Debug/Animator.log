@@ -1,21 +1,10 @@
-﻿Build started 4/29/2012 17:12:50.
+﻿Build started 5/1/2012 18:56:38.
      1>Project "C:\Workspace\Graphics Projects\Animator\AniSkelS12\Animator.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\modeler.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Ilocal/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D SAMPLE_SOLUTION /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt spider.cpp
-         spider.cpp
-     1>c:\workspace\graphics projects\animator\aniskels12\marching_cube.h(5): warning C4305: 'initializing' : truncation from 'double' to 'const float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(654): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(654): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(654): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(735): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(736): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(736): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(736): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(737): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(738): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\workspace\graphics projects\animator\aniskels12\spider.cpp(745): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         C:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Ilocal/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D SAMPLE_SOLUTION /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\Debug/" /Fd".\Debug/vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt particle.cpp
+         particle.cpp
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -52,7 +41,7 @@
          All outputs are up-to-date.
          Animator.vcxproj -> C:\Workspace\Graphics Projects\Animator\AniSkelS12\.\Debug\modeler.exe
        BscMake:
-         All outputs are up-to-date.
+         C:\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug/Animator.bsc" .\Debug\beziercurve.sbr .\Debug\bsplinecurve.sbr .\Debug\catmullromcurve.sbr .\Debug\curve.sbr .\Debug\curveevaluator.sbr .\Debug\force.sbr .\Debug\linearcurveevaluator.sbr .\Debug\camera.sbr .\Debug\marching_cube.sbr .\Debug\meta_drawing.sbr .\Debug\modelerapp.sbr .\Debug\modelerdraw.sbr .\Debug\modelerui.sbr .\Debug\modeleruiwindows.sbr .\Debug\modelerview.sbr .\Debug\bitmap.sbr .\Debug\particle.sbr .\Debug\particleSystem.sbr .\Debug\point.sbr .\Debug\pointObj.sbr .\Debug\graphwidget.sbr .\Debug\indicatorwindow.sbr .\Debug\rect.sbr .\Debug\rulerwindow.sbr .\Debug\spider.sbr
        FinalizeBuildStatus:
          Deleting file ".\Debug\modeler.unsuccessfulbuild".
          Touching ".\Debug\modeler.lastbuildstate".
@@ -60,4 +49,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.91
+Time Elapsed 00:00:16.02

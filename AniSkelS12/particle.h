@@ -28,7 +28,7 @@ public:
 
 	void addForce(Force* f);
 	void move(float deltaT);
-	void draw(GLuint texture);
+	void draw(Vec3f viewDir);
 
 private:
 	float mass;

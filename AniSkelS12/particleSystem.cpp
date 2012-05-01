@@ -17,7 +17,7 @@
 
 ParticleSystem::ParticleSystem() 
 {
-	loadTexture();
+	// loadTexture();
 
 	srand(time(0));
 
@@ -34,29 +34,6 @@ ParticleSystem::~ParticleSystem()
 {
 	particles.clear();
 	forces.clear();
-}
-
-void ParticleSystem::loadTexture() {
-	int texWidth, texHeight;
-	unsigned char* texture;
-	
-	if((texture = readBMP("images/env_map.bmp", texWidth, texHeight)) == NULL) {
-		return;
-	}
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, 1);
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight,
-		0, GL_RGB, GL_UNSIGNED_BYTE, texture);
 }
 
 /******************
@@ -125,12 +102,12 @@ void ParticleSystem::computeForcesAndUpdateParticles(float t)
 }
 
 /** Render particles */
-void ParticleSystem::drawParticles(float t)
+void ParticleSystem::drawParticles(float t, Vec3f viewDir)
 {
 	if (simulate) {
 		vector<Particle>::iterator iter;
 		for (iter = bakeData[t].begin(); iter != bakeData[t].end(); iter++) {
-			iter->draw(1);
+			iter->draw(viewDir);
 		}
 	}
 }

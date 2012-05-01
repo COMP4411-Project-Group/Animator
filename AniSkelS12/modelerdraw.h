@@ -74,6 +74,8 @@ void closeRayFile();
 // Raytraceable Primitives //
 /////////////////////////////
 
+void drawWeb( int numOfAngles, int size );
+
 // Draw a sphere of radius r
 void drawSphere(double r, bool enableTexture = false);
 

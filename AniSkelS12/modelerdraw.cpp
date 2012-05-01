@@ -2,6 +2,7 @@
 #include <FL/gl.h>
 #include <GL/glu.h>
 #include <cstdio>
+#include <cmath>
 
 // ********************************************************
 // Support functions from previous version of modeler
@@ -191,6 +192,64 @@ void closeRayFile()
         fclose(mds->m_rayFile);
     
     mds->m_rayFile = NULL;
+}
+
+void drawWeb( int numOfAngles, int size ) {
+    ModelerDrawState *mds = ModelerDrawState::Instance();
+	_setupOpenGl();
+
+	if (mds->m_rayFile) {
+        _dump_current_modelview();
+        fprintf(mds->m_rayFile, "scale(%d,%d,web {\n", numOfAngles, size );
+        _dump_current_material();
+        fprintf(mds->m_rayFile, "}))\n" );
+    } else {
+		/* remember which matrix mode OpenGL was in. */
+        int savemode;
+        glGetIntegerv( GL_MATRIX_MODE, &savemode );
+        
+        /* switch to the model matrix and scale by x,y,z. */
+        glMatrixMode( GL_MODELVIEW );
+        glPushMatrix();
+
+		glBegin( GL_LINES );
+			for (int i = 0; i < numOfAngles; i++) {
+				double radian1 = (360 / numOfAngles) / 57.3 * i;
+				double radian2 = (360 / numOfAngles) / 57.3 * (i + 1);
+				glVertex3f(0, 0, 0);
+				glVertex3f(cos(radian1) * size, size * 0.1, sin(radian1) * size);
+				for (int j = 1; j < size - 3; j++) {
+					glVertex3f(cos(radian1) * j, j * 0.1, sin(radian1) * j);
+					glVertex3f(cos((4 * radian1 + 1 * radian2) / 5) * j * 0.9, + j * 0.07, 
+							sin((4 * radian1 + 1 * radian2) / 5) * j * 0.9);
+
+					glVertex3f(cos((4 * radian1 + 1 * radian2) / 5) * j * 0.9, + j * 0.07, 
+							sin((4 * radian1 + 1 * radian2) / 5) * j * 0.9);
+					glVertex3f(cos((3 * radian1 + 2 * radian2) / 5) * j * 0.85, + j * 0.05, 
+							sin((3 * radian1 + 2 * radian2) / 5) * j * 0.85);
+
+					glVertex3f(cos((3 * radian1 + 2 * radian2) / 5) * j * 0.85, + j * 0.05, 
+							sin((3 * radian1 + 2 * radian2) / 5) * j * 0.85);
+					glVertex3f(cos((2 * radian1 + 3 * radian2) / 5) * j * 0.85, + j * 0.05, 
+							sin((2 * radian1 + 3 * radian2) / 5) * j * 0.85);
+
+					glVertex3f(cos((2 * radian1 + 3 * radian2) / 5) * j * 0.85, + j * 0.05, 
+							sin((2 * radian1 + 3 * radian2) / 5) * j * 0.85);
+					glVertex3f(cos((1 * radian1 + 4 * radian2) / 5) * j * 0.9, + j * 0.07, 
+							sin((1 * radian1 + 4 * radian2) / 5) * j * 0.9);
+
+					glVertex3f(cos((1 * radian1 + 4 * radian2) / 5) * j * 0.9, + j * 0.07, 
+							sin((1 * radian1 + 4 * radian2) / 5) * j * 0.9);
+					glVertex3f(cos(radian2) * j, j * 0.1, sin(radian2) * j);
+				}
+			}
+		glEnd();
+
+        /* restore the model matrix stack, and switch back to the matrix
+        mode we were in. */
+        glPopMatrix();
+        glMatrixMode( savemode );
+    }
 }
 
 void drawSphere(double r, bool enableTexture)
@@ -411,7 +470,7 @@ void drawCylinder( double h, double r1, double r2, bool enableTexture)
         gluq = gluNewQuadric();
         gluQuadricDrawStyle( gluq, GLU_FILL );
 		if (enableTexture) {
-			glBindTexture(GL_TEXTURE_2D, 0);
+			glBindTexture(GL_TEXTURE_2D, 1);
 			gluQuadricTexture( gluq, GL_TRUE );
 		}
         gluCylinder( gluq, r1, r2, h, divisions, divisions);
@@ -425,7 +484,7 @@ void drawCylinder( double h, double r1, double r2, bool enableTexture)
             gluq = gluNewQuadric();
             gluQuadricDrawStyle( gluq, GLU_FILL );
 			if (enableTexture) {
-				glBindTexture(GL_TEXTURE_2D, 0);
+				glBindTexture(GL_TEXTURE_2D, 1);
 				gluQuadricTexture( gluq, GL_TRUE );
 			}
             gluQuadricOrientation( gluq, GLU_INSIDE );
@@ -451,7 +510,7 @@ void drawCylinder( double h, double r1, double r2, bool enableTexture)
             gluq = gluNewQuadric();
             gluQuadricDrawStyle( gluq, GLU_FILL );
 			if (enableTexture) {
-				glBindTexture(GL_TEXTURE_2D, 0);
+				glBindTexture(GL_TEXTURE_2D, 1);
 				gluQuadricTexture( gluq, GL_TRUE );
 			}
             gluQuadricOrientation( gluq, GLU_OUTSIDE );
