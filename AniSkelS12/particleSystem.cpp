@@ -17,6 +17,8 @@
 
 ParticleSystem::ParticleSystem() 
 {
+	// loadTexture();
+
 	srand(time(0));
 
 	forces.push_back(new Gravity(Vec3<float>(0, -0.02, 0)));
@@ -33,7 +35,6 @@ ParticleSystem::~ParticleSystem()
 	particles.clear();
 	forces.clear();
 }
-
 
 /******************
  * Simulation fxns
@@ -101,12 +102,12 @@ void ParticleSystem::computeForcesAndUpdateParticles(float t)
 }
 
 /** Render particles */
-void ParticleSystem::drawParticles(float t)
+void ParticleSystem::drawParticles(float t, Vec3f viewDir)
 {
 	if (simulate) {
 		vector<Particle>::iterator iter;
 		for (iter = bakeData[t].begin(); iter != bakeData[t].end(); iter++) {
-			iter->draw();
+			iter->draw(viewDir);
 		}
 	}
 }

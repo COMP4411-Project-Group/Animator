@@ -16,6 +16,71 @@ static const int	kMouseZoomButton				= FL_RIGHT_MOUSE;
 
 static const char *bmp_name = NULL;
 
+int initTexture() {
+	unsigned char* texture1;
+	int texWidth1;
+	int texHeight1;
+	//load image from file
+	if((texture1 = readBMP("images/env_map.bmp", texWidth1, texHeight1)) == NULL) {
+		return 0;
+	}
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 1);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth1, texHeight1,
+		0, GL_RGB, GL_UNSIGNED_BYTE, texture1);
+
+	unsigned char* texture2;
+	int texWidth2;
+	int texHeight2;
+
+	if((texture2 = readBMP("images/test.bmp", texWidth2, texHeight2)) == NULL) {
+		return 0;
+	}
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 2);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth2, texHeight2,
+		0, GL_RGB, GL_UNSIGNED_BYTE, texture2);
+
+	unsigned char* texture3;
+	int texWidth3;
+	int texHeight3;
+
+	if((texture3 = readBMP("images/celshade.bmp", texWidth3, texHeight3)) == NULL) {
+		return 0;
+	}
+
+	glEnable(GL_TEXTURE_1D);
+	glBindTexture(GL_TEXTURE_1D, 3);
+
+	glTexParameterf(GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	glTexImage1D(GL_TEXTURE_1D, 0, GL_RGB, 16, 0,
+		GL_RGB, GL_UNSIGNED_BYTE, texture3);
+
+	return true;
+}
+
 ModelerView::ModelerView(int x, int y, int w, int h, char *label)
 : Fl_Gl_Window(x,y,w,h,label), t(0), save_bmp(false) 
 {
@@ -90,17 +155,17 @@ static GLfloat lightDiffuse0[]  = { 1,1,1,1 };
 static GLfloat lightPosition1[] = { -2, 1, 5, 0 };
 static GLfloat lightDiffuse1[]  = { 1, 1, 1, 1 };
 
-
-void ModelerView::draw()
-{
+void ModelerView::drawCelShaded() {
+	/*
     if (!valid())
     {
         glShadeModel( GL_SMOOTH );
         glEnable( GL_DEPTH_TEST );
-        glEnable( GL_LIGHTING );
-		glEnable( GL_LIGHT0 );
-        glEnable( GL_LIGHT1 );
+        glDisable( GL_LIGHTING );
+		glDisable( GL_LIGHT0 );
+        glDisable( GL_LIGHT1 );
 		glEnable( GL_NORMALIZE );
+		initTexture();
     }
 
   	glViewport( 0, 0, w(), h() );
@@ -123,6 +188,45 @@ void ModelerView::draw()
 	if (ps != NULL) {
 		ps->computeForcesAndUpdateParticles(t);
 		ps->drawParticles(t);
+	}
+	*/
+}
+
+void ModelerView::draw()
+{
+    if (!valid())
+    {
+        glShadeModel( GL_SMOOTH );
+        glEnable( GL_DEPTH_TEST );
+        glEnable( GL_LIGHTING );
+		glEnable( GL_LIGHT0 );
+        glEnable( GL_LIGHT1 );
+		glEnable( GL_NORMALIZE );
+		initTexture();
+    }
+
+  	glViewport( 0, 0, w(), h() );
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(30.0,float(w())/float(h()),1.0,100.0);
+				
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    m_camera->applyViewingTransform();
+
+    glLightfv( GL_LIGHT0, GL_POSITION, lightPosition0 );
+    glLightfv( GL_LIGHT0, GL_DIFFUSE, lightDiffuse0 );
+    glLightfv( GL_LIGHT1, GL_POSITION, lightPosition1 );
+    glLightfv( GL_LIGHT1, GL_DIFFUSE, lightDiffuse1 );
+
+	// If particle system exists, draw it
+	ParticleSystem *ps = ModelerApplication::Instance()->GetParticleSystem();
+	if (ps != NULL) {
+		ps->computeForcesAndUpdateParticles(t);
+		Vec3f viewDir = m_camera->getPosition();
+		viewDir.normalize();
+		ps->drawParticles(t, viewDir);
 	}
 }
 

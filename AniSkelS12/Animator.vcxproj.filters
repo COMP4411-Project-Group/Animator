@@ -114,9 +114,6 @@
     <ClCompile Include="bsplinecurve.cpp">
       <Filter>Source Files\Curves</Filter>
     </ClCompile>
-    <ClCompile Include="c_two_interpolate_curve.cpp">
-      <Filter>Source Files\Curves</Filter>
-    </ClCompile>
     <ClCompile Include="catmullromcurve.cpp">
       <Filter>Source Files\Curves</Filter>
     </ClCompile>
@@ -200,11 +197,11 @@
     <ClInclude Include="bsplinecurve.h">
       <Filter>Header Files\Curves.</Filter>
     </ClInclude>
-    <ClInclude Include="c_two_interpolate_curve.h">
-      <Filter>Header Files\Curves.</Filter>
-    </ClInclude>
     <ClInclude Include="catmullromcurve.h">
       <Filter>Header Files\Curves.</Filter>
+    </ClInclude>
+    <ClInclude Include="heightmap.h">
+      <Filter>Header Files\Model.</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

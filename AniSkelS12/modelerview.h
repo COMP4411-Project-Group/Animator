@@ -26,6 +26,7 @@ public:
 
 	virtual ~ModelerView();
     virtual int handle(int event);
+	virtual void drawCelShaded();
     virtual void draw();
 
 	void setBMP(const char *fname);

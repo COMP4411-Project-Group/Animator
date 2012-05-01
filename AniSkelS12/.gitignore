@@ -1,6 +1,14 @@
+<<<<<<< HEAD
+/*.opensdf
+/*.user
+/Release/
+/*.sdf
+/*.vcxproj.user
+=======
 /*.opensdf
 /*.user
 /Release/
 /*.sdf
 /*.vcxproj.user
 /*.suo
+>>>>>>> f87f9c752192a324a18a8935f750442e7d4eebea

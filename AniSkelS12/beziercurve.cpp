@@ -107,5 +107,3 @@ void BezierCurveEvaluator::evaluateCurve(
 		}
 	}
 } 
-
-
